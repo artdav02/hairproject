@@ -1,0 +1,27 @@
+.successContent{
+    background-color: #F5F5F5;
+    min-height: 100vh;
+    height: 100%;
+    padding: 150px;
+}
+.successMain{
+    margin: 0 auto;
+    width: 700px;
+    background-color: white;
+    text-align: center;
+    padding: 60px 60px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.pageText{
+    font-weight: bold;
+    font-size: 26px;
+    letter-spacing: 2px;
+}
+.pageSubText{
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+.contactDetails{
+    margin-top: 40px;
+}

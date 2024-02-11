@@ -1,0 +1,71 @@
+.sidebar {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background: rgba(46, 45, 48,1);
+    transition: bottom 0.3s ease;
+    z-index: 1001; /* higher than overlay */
+}
+
+.sidebar.open {
+    right: 0;
+}
+.closeSvg{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin: 20px;
+    float: right;
+    border: 2px solid black;
+    border-radius: 50%;
+    padding: 5px;
+}
+/* Sidebar.css */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.sidebar li {
+    padding: 8px 12px;
+    cursor: pointer;
+    animation: slideDown 0.3s ease forwards;
+    opacity: 0; /* Start with the element being invisible */
+}
+
+.sidebar li:hover {
+    background-color: #f0f0f0;
+}
+.buttons{
+    margin-top: 100px;
+}
+.buttonsCategory{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.buttonsSingleCategory{
+    text-align: center;
+    border: 2px solid black;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.buttonsSingleCategory:hover{
+    transition: 0.3s;
+    background: rgba(52, 50, 53,1);
+}

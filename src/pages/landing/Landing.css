@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalnia:wght@400;500;600;700&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+.header{
+    background:linear-gradient(0deg, rgba(0,0,0, 1), rgba(0,0,0, 0.8)), url("../../img/bg .png");
+    height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.navbar{
+    color: white;
+    font-family: Kalnia, serif;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-left: -60px;
+    padding-top: 20px;
+}
+.navbarItem{
+    cursor: pointer;
+    transition: 0.3s;
+}
+.navbarItem:hover{
+    transition: 0.3s;
+    color: #999999;
+}
+.bookNow {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #5541D7; /* Make the button background transparent */
+    position: fixed; /* Keep the button fixed as required */
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: pulsate 4s infinite ease-in-out;
+}
+
+
+.bookNow:hover::before {
+    animation: none; /* Stop the animation on hover */
+}
+
+.bookText {
+    z-index: 1; /* Ensure the text is above the pseudo-element */
+    color: white; /* Text color */
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+.mainText{
+    color: white;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    font-family: Kalnia, serif;
+    font-weight: 400;
+    padding-top: 370px;
+    letter-spacing: 8px;
+}
+.letter {
+    display: inline-block;
+    opacity: 0;
+}
+
+.animate-top {
+    animation: slideFromTop 1s forwards;
+}
+
+.animate-bottom {
+    animation: slideFromBottom 1s forwards;
+}
+
+@keyframes slideFromTop {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideFromBottom {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.priceList{
+    background-color: black;
+}
+.contentContainer{
+    margin: 0 auto;
+    max-width: 1200px;
+}
+.priceHeader{
+    justify-content: center;
+    display: flex;
+    font-size: 25px;
+    font-family: Arial, serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: white;
+    padding-top: 50px;
+    background-color: black;
+}
+.subHeader{
+    color: #5541D7;
+    font-size: 20px;
+    font-family: Arial, serif;
+    font-weight: 400;
+    letter-spacing: 2px;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+.headerSubHeader{
+    color: white;
+    letter-spacing: 2px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+.sectionList {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding-top: 20px;
+    width: 100%;
+    gap: 40px;
+    padding-bottom: 40px;
+}
+
+.itemsLeft, .itemsRight {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* this will make them expand to fill available space */
+    margin-right: 10px; /* adjust as needed, add for .itemsLeft */
+    margin-left: 10px; /* adjust as needed, add for .itemsRight */
+}
+.serviceName{
+    text-transform: uppercase;
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-size: 18px;
+    border-bottom: 2px solid white;
+    padding-bottom: 15px;
+}
+.subDescription{
+    color: white;
+    font-size: 14px;
+    max-width: 500px;
+    margin-top: -55px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+}
+.itemsLeft, .itemsRight {
+    display: flex;
+    flex-direction: column;
+    width: calc(50% - 20px); /* Subtract the gap from the total width */
+}
+
+.item, .subDescription {
+    width: 100%; /* Ensures that all items and descriptions take full width of the parent */
+}
+.advantagesBg{
+    background-color: black;
+}
+.advantages{
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+.advantagesHeader {
+    color: #EEEEEE;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    font-family: Kalnia, serif;
+    font-weight: 400;
+    letter-spacing: 8px;
+    padding-bottom: 40px;
+}
+
+.advantagesMain {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+
+.singleAdvantage {
+    width: 310px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.advantageImg {
+    background-size: cover;
+    background-position: 50% 20%;
+    width: 100%;
+    height: 300px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.advantageDescription {
+    background-color: #EEEEEE;
+    height: 120px;
+    padding: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-family: Kalnia, serif;
+}
+.advHeader {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+}
+.advDescription {
+    font-size: 18px;
+    color: #999999;
+    font-weight: 600;
+    margin-top: 5px;
+    font-family: 'Raleway', sans-serif;
+}
+.footer{
+    text-align: center;
+    padding-top: 30px;
+}
+.logo{
+    font-size: 50px;
+    font-family: Kalnia, serif;
+    letter-spacing: 20px;
+    margin-left: 20px;
+}
+.description{
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.phone{
+    font-size: 20px;
+    font-weight: bold;
+}
+.mailAddressPostcode{
+    margin-top: 8px;
+}
+.socials{
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 20px;
+    padding-bottom: 40px;
+}
