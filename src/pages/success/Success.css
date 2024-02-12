@@ -23,5 +23,12 @@
     letter-spacing: 2px;
 }
 .contactDetails{
-    margin-top: 40px;
+    margin-top: 10px;
+}
+.bookButtonSuccess{
+    width: 300px;
+    margin: 20px auto;
+}
+.bold{
+    font-weight: bold;
 }

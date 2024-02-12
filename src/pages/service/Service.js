@@ -8,6 +8,9 @@ import {useNavigate} from "react-router-dom";
 import logo from './img/logo.png'
 import back from './img/icons8-left-arrow-50.png'
 import user from './img/icons8-user-48.png'
+import faq from './img/icons8-more-info-50.png'
+import hair from './img/icons8-hairdresser-50.png'
+
 const ServicePage = () => {
 
     const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -22,6 +25,35 @@ const ServicePage = () => {
         phoneNumber: ''
     });
     const [detailsFilled, setDetailsFilled] = useState(false);
+    const [emailError, setEmailError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im; // Adjust this regex according to the expected phone number format
+
+    const [isMasterMenuVisible, setIsMasterMenuVisible] = useState(false);
+    const [selectedMaster, setSelectedMaster] = useState(null);
+    const masters = [
+        { name: "Doesn't matter", imageUrl: user },
+        { name: 'Lepeha Babahmatov', imageUrl: logo },
+        { name: 'Edwin Dooma', imageUrl: logo },
+        // Add more masters as needed
+    ];
+
+
+    const toggleMasterMenu = () => {
+        if (selectedService) { // Ensure a service is selected before allowing to choose a master
+            setIsMasterMenuVisible(!isMasterMenuVisible);
+        }
+        if(selectedMaster) {
+            setSelectedMaster(null)
+        }
+    };
+
+    const handleMasterSelection = (master) => {
+        setSelectedMaster(master); // master should be an object with { name, imageUrl }
+        setIsMasterMenuVisible(false);
+    };
+
 
     const navigate = useNavigate();
 
@@ -51,6 +83,7 @@ const ServicePage = () => {
 
     const handleServiceSelection = (serviceItem) => {
         setSelectedService(serviceItem);
+        setSelectedMaster(null);
         setIsMenuVisible(false);
         setIsCalendarVisible(false);
         setIsUserDetailsVisible(false); // Reset user details visibility
@@ -68,10 +101,30 @@ const ServicePage = () => {
             ...prevDetails,
             [name]: value
         }));
+
+        // Email validation
+        if (name === 'email') {
+            if (!emailRegex.test(value)) {
+                setEmailError('Valesti sisestatud e-mail!');
+            } else {
+                setEmailError('');
+            }
+        }
+
+        // Phone number validation
+        if (name === 'phoneNumber') {
+            if (!phoneRegex.test(value)) {
+                setPhoneError('Valesti sisestatud number!');
+            } else {
+                setPhoneError('');
+            }
+        }
+
         // Check if all details are filled
         const allDetailsFilled = Object.values({ ...userDetails, [name]: value }).every(detail => detail !== '');
-        setDetailsFilled(allDetailsFilled);
+        setDetailsFilled(allDetailsFilled && !emailError && !phoneError);
     };
+
 
     const handleBack = () => {
         navigate('/');
@@ -155,7 +208,46 @@ const ServicePage = () => {
 
                 </div>
             </div>
-                <div className={`mainDetails${selectedService ? '' : ' disabled'}`} onClick={handleUserDetailsToggle}>
+
+                <div className={`mainDetails${selectedService ? '' : ' disabled'}`} onClick={toggleMasterMenu}>
+                    <div className="serviceLogo">
+                        <img src={hair} alt="" className='serviceLogoImg'/>
+                    </div>
+                    <div className="serviceChoose">
+                        Vali teenusepakkuja
+                    </div>
+                </div>
+                {isMasterMenuVisible && (
+                    <div className="mastersContainer">
+                        {masters.map((master, index) => (
+                            <div key={index} className="masterItem" onClick={() => handleMasterSelection(master)}>
+                                <img src={master.imageUrl} alt={master.name} className="masterImage" />
+                                <div className="masterName">{master.name}</div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {selectedMaster && (
+                    <div className="selectedServiceContainer">
+                        <div className="selectedMainMaster">
+                                <div className="selectedMasterDetails">
+                                <img src={selectedMaster.imageUrl} alt={selectedMaster.name} className="masterImage" />
+                                <div className='selectedMasterName'>{selectedMaster.name}</div>
+                                </div>
+                                <div className="selectedMasterInfo">
+                                    <img src={faq} alt="" className='faqImage'/>
+                                </div>
+                        </div>
+                    </div>
+                )}
+
+
+                <div className={`mainDetails ${selectedService && selectedMaster ? '' : ' disabled'}`} onClick={() => {
+                    if (selectedMaster) { // Check if a master has been selected
+                        handleUserDetailsToggle();
+                    }
+                }}>
                     <div className="serviceLogo">
                         <img src={user} alt="" className='serviceLogoImg'/>
                     </div>
@@ -171,7 +263,7 @@ const ServicePage = () => {
                         <input
                             type="text"
                             name="name"
-                            placeholder="Name"
+                            placeholder="Nimi"
                             value={userDetails.name}
                             onChange={handleUserDetailChange}
                             className="userDetailInput"
@@ -182,7 +274,7 @@ const ServicePage = () => {
                         <input
                             type="text"
                             name="surname"
-                            placeholder="Surname"
+                            placeholder="Perekonnanimi"
                             value={userDetails.surname}
                             onChange={handleUserDetailChange}
                             className="userDetailInput"
@@ -193,22 +285,24 @@ const ServicePage = () => {
                         <input
                             type="email"
                             name="email"
-                            placeholder="Email"
+                            placeholder="E-mail"
                             value={userDetails.email}
                             onChange={handleUserDetailChange}
                             className="userDetailInput"
                         />
+                        {emailError && <div className='inputError' style={{ color: 'red' }}>{emailError}</div>}
                         <div className="inputHeader">
                             Telefoni number
                         </div>
                         <input
                             type="tel"
                             name="phoneNumber"
-                            placeholder="Phone Number"
+                            placeholder="+372 12345678"
                             value={userDetails.phoneNumber}
                             onChange={handleUserDetailChange}
                             className="userDetailInput"
                         />
+                        {phoneError && <div className='inputError' style={{ color: 'red' }}>{phoneError}</div>}
                     </div>
                 )}
 
@@ -225,9 +319,10 @@ const ServicePage = () => {
                         <CalendarComponent
                             serviceName={selectedService.name}
                             duration={selectedService.duration}
-                            masterName="Einar Kivisaalu"
+                            masterName={selectedMaster.name}
                             userName={userDetails.name}
                             userSurname={userDetails.surname}
+                            email={userDetails.email}
                         />
 
                     </div>

@@ -131,12 +131,13 @@ function CalendarComponent(props) {
                 serviceName: props.serviceName,
                 duration: props.duration,
                 masterName: props.masterName,
+                email: props.email,
             };
 
             try {
                 const response = await axios.post('http://localhost:3001/api/book', appointment);
                 console.log(response.data);
-                navigate('/success', { state: { name: props.userName, surname: props.userSurname, date: selectedDate.toLocaleDateString(), time: selectedTime } });
+                navigate('/success', { state: { name: props.userName, surname: props.userSurname, date: selectedDate.toLocaleDateString(), time: selectedTime, email: props.email } });
             } catch (error) {
                 console.error(error);
                 alert('Failed to book the appointment.');

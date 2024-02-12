@@ -257,3 +257,66 @@
     margin-bottom: -10px;
     letter-spacing: 2px;
 }
+.inputError{
+    font-size: 15px;
+    font-weight: normal;
+    margin-left: 20px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+.mastersContainer{
+    background-color: white;
+    width: 480px;
+    margin: -15px 20px 0px 20px;
+    padding-top: 40px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+.masterItem{
+    border: 2px solid white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin: 5px 20px;
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.masterItem:hover{
+    border: 2px solid #ccc;
+    transition: 0.3s;
+}
+.masterImage{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.masterName{
+    align-self: center;
+}
+.selectedMasterDetails{
+    display: flex;
+    gap: 10px;
+}
+.selectedMasterName{
+    align-self: center;
+}
+.selectedMainMaster{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.selectedMasterInfo{
+    align-self: center;
+}
+.faqImage{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
