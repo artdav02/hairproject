@@ -1,0 +1,34 @@
+.aboutContainer{
+    background-color: #050505;
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+.headerAbout{
+    padding-top: 70px;
+    padding-bottom: 50px;
+    color: #F5F5F5;
+    font-size: 56px;
+}
+.aboutText{
+    width: 80%;
+    margin: 0 auto;
+    color: #F5F5F5;
+    font-size: 20px;
+}
+.map{
+
+}
+.underFot{
+    color: grey;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+}
+.poweredBy{
+    padding-top: 40px;
+    font-size: 25px;
+    color: white;
+    letter-spacing: 2px;
+}

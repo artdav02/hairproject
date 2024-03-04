@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {serviceCategories} from "./data";
 import './Service.css';
 import CalendarComponent from "../../components/calendar/Calendar";
@@ -10,6 +10,9 @@ import back from './img/icons8-left-arrow-50.png'
 import user from './img/icons8-user-48.png'
 import faq from './img/icons8-more-info-50.png'
 import hair from './img/icons8-hairdresser-50.png'
+import kristjan from './img/Guy-Baron.jpg'
+import lina from './img/woman.jpg';
+import negr from './img/26xp-minneapolis-floyd-mediumSquareAt3X.jpg';
 
 const ServicePage = () => {
 
@@ -24,6 +27,7 @@ const ServicePage = () => {
         email: '',
         phoneNumber: ''
     });
+    const [additionalInfo, setAdditionalInfo] = useState('');
     const [detailsFilled, setDetailsFilled] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [phoneError, setPhoneError] = useState('');
@@ -33,9 +37,10 @@ const ServicePage = () => {
     const [isMasterMenuVisible, setIsMasterMenuVisible] = useState(false);
     const [selectedMaster, setSelectedMaster] = useState(null);
     const masters = [
-        { name: "Doesn't matter", imageUrl: user },
-        { name: 'Lepeha Babahmatov', imageUrl: logo },
-        { name: 'Edwin Dooma', imageUrl: logo },
+        { name: "Pole tähtis", imageUrl: user },
+        { masterId: 1, name: 'Kristjan Babahmatov', imageUrl: kristjan, info: 'Minu nimi on Kristjan, ja ma olen juuksur-stilist Tallinnas. Alustasin oma karjääri viisteist aastat tagasi, pärast seda, kui avastasin oma kirge kunsti ja moe vastu. Minu spetsialiteet on avant-garde soengud ja julged värvilahendused, mis peegeldavad minu klientide isikupära. Ma usun, et iga soeng on nagu kunstiteos, mis räägib lugu. ', instUrl: 'https://google.com', linkedinUrl: 'https://linkedin.com', twitUrl: 'https://twitter.com' },
+        { masterId: 2, name: 'Liina Makova', imageUrl: lina, info: 'Minu nimi on Liina, ja ma olen pärit väikesest Eesti külast, kus juuksuritööd peetakse põlvest põlve edasi antavaks käsitööks. Olen spetsialiseerunud traditsioonilistele lõikustehnikatele ja looduslikele juuksehooldusvahenditele, mida valmistan ise kohalikest taimedest. Minu klientide hulka kuuluvad need, kes hindavad aegumatut ilu ja soovivad oma juustele parimat hoolitsust.', instUrl: 'https://google.com', linkedinUrl: 'https://linkedin.com', twitUrl: 'https://twitter.com' },
+        { masterId: 3, name: 'Marek Dodik', imageUrl: negr, info: 'Minu nimi on Marek, ja ma olen meeste juuksur Pärnus. Alustasin oma karjääri soovist moderniseerida meeste juuksurikogemust, pakkudes midagi enamat kui lihtsalt lõikust - pakkudes kogemust. Minu salongis ühendan ma traditsioonilised barberitehnikad kaasaegse stiiliga, luues nüüdisaegseid ja stiilseid lõikusi, mis sobivad iga mehe isikupäraga. Lisaks pakun habemeajamist ja näohooldusi, kasutades kvaliteetseid tooteid. ',instUrl: 'https://google.com', linkedinUrl: 'https://linkedin.com', twitUrl: 'https://twitter.com' },
         // Add more masters as needed
     ];
 
@@ -90,7 +95,7 @@ const ServicePage = () => {
     };
 
     const handleDateSelectionClick = () => {
-        if (selectedService && detailsFilled) {
+        if (selectedService && detailsFilled) { // Ensure all user details are valid
             setIsCalendarVisible(!isCalendarVisible);
         }
     };
@@ -102,34 +107,39 @@ const ServicePage = () => {
             [name]: value
         }));
 
+        let tempEmailError = emailError;
+        let tempPhoneError = phoneError;
+
         // Email validation
         if (name === 'email') {
-            if (!emailRegex.test(value)) {
-                setEmailError('Valesti sisestatud e-mail!');
-            } else {
-                setEmailError('');
-            }
+            tempEmailError = emailRegex.test(value) ? '' : 'Valesti sisestatud e-mail!';
         }
 
         // Phone number validation
         if (name === 'phoneNumber') {
-            if (!phoneRegex.test(value)) {
-                setPhoneError('Valesti sisestatud number!');
-            } else {
-                setPhoneError('');
-            }
+            tempPhoneError = phoneRegex.test(value) ? '' : 'Valesti sisestatud number!';
         }
 
-        // Check if all details are filled
-        const allDetailsFilled = Object.values({ ...userDetails, [name]: value }).every(detail => detail !== '');
-        setDetailsFilled(allDetailsFilled && !emailError && !phoneError);
+        setEmailError(tempEmailError);
+        setPhoneError(tempPhoneError);
+
+        // Check if all details are filled and valid
+        const allDetailsFilled = Object.values({ ...userDetails, [name]: value }).every(detail => detail !== '') && !tempEmailError && !tempPhoneError;
+        setDetailsFilled(allDetailsFilled);
     };
+
 
 
     const handleBack = () => {
         navigate('/');
     };
 
+
+
+    const handleMaster = () => {
+        console.log(selectedMaster.masterId)
+        navigate('/master', { state: { name: selectedMaster.name, img: selectedMaster.imageUrl, info: selectedMaster.info, instUrl: selectedMaster.instUrl, masterId: selectedMaster.masterId } });
+    }
 
     return (
         <div className="service-page">
@@ -218,9 +228,11 @@ const ServicePage = () => {
                     </div>
                 </div>
                 {isMasterMenuVisible && (
-                    <div className="mastersContainer">
+                    <div className={`mastersContainer ${isMasterMenuVisible ? 'fadeInUp' : ''}`}>
                         {masters.map((master, index) => (
-                            <div key={index} className="masterItem" onClick={() => handleMasterSelection(master)}>
+                            <div className={`categoryNameMaster${activeCategory === master.name ? ' active' : ''}`}
+                                 key={master.masterId}  onClick={() => handleMasterSelection(master)}
+                                          style={{ animationDelay: `${index * 0.1}s` }} >
                                 <img src={master.imageUrl} alt={master.name} className="masterImage" />
                                 <div className="masterName">{master.name}</div>
                             </div>
@@ -235,9 +247,11 @@ const ServicePage = () => {
                                 <img src={selectedMaster.imageUrl} alt={selectedMaster.name} className="masterImage" />
                                 <div className='selectedMasterName'>{selectedMaster.name}</div>
                                 </div>
-                                <div className="selectedMasterInfo">
-                                    <img src={faq} alt="" className='faqImage'/>
+                            {selectedMaster.name !== "Pole tähtis" && (
+                                <div className="selectedMasterInfo" >
+                                    <img src={faq} alt="" className='faqImage' onClick={handleMaster}/>
                                 </div>
+                            )}
                         </div>
                     </div>
                 )}
@@ -258,7 +272,7 @@ const ServicePage = () => {
                 {isUserDetailsVisible && (
                     <div className="userDetailsSection">
                         <div className="inputHeader">
-                            Nimi
+                            Nimi *
                         </div>
                         <input
                             type="text"
@@ -269,7 +283,7 @@ const ServicePage = () => {
                             className="userDetailInput"
                         />
                         <div className="inputHeader">
-                            Perekonnanimi
+                            Perekonnanimi *
                         </div>
                         <input
                             type="text"
@@ -280,7 +294,7 @@ const ServicePage = () => {
                             className="userDetailInput"
                         />
                         <div className="inputHeader">
-                            E-mail
+                            E-mail *
                         </div>
                         <input
                             type="email"
@@ -292,7 +306,7 @@ const ServicePage = () => {
                         />
                         {emailError && <div className='inputError' style={{ color: 'red' }}>{emailError}</div>}
                         <div className="inputHeader">
-                            Telefoni number
+                            Telefoni number *
                         </div>
                         <input
                             type="tel"
@@ -303,6 +317,16 @@ const ServicePage = () => {
                             className="userDetailInput"
                         />
                         {phoneError && <div className='inputError' style={{ color: 'red' }}>{phoneError}</div>}
+                        <div className="inputHeader">
+                            Midagi kasulikut
+                        </div>
+                        <textarea
+                            name="additionalInfo"
+                            placeholder="Kirjuta siia mingeid lisasoove või informatsiooni"
+                            value={additionalInfo}
+                            onChange={(e) => setAdditionalInfo(e.target.value)}
+                            className="userDetailInput area"
+                        />
                     </div>
                 )}
 
@@ -323,6 +347,9 @@ const ServicePage = () => {
                             userName={userDetails.name}
                             userSurname={userDetails.surname}
                             email={userDetails.email}
+                            phoneNumber={userDetails.phoneNumber}
+                            additionalInfo={additionalInfo}
+                            price='40$'
                         />
 
                     </div>

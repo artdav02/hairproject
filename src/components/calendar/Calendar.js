@@ -131,11 +131,17 @@ function CalendarComponent(props) {
                 serviceName: props.serviceName,
                 duration: props.duration,
                 masterName: props.masterName,
+                userName: props.userName,
+                userSurname: props.userSurname,
                 email: props.email,
+                phone: props.phoneNumber,
+                info: props.additionalInfo,
+                price: props.price,
             };
 
             try {
                 const response = await axios.post('http://localhost:3001/api/book', appointment);
+                const response2 = await axios.post('http://localhost:3001/api/send-email', appointment);
                 console.log(response.data);
                 navigate('/success', { state: { name: props.userName, surname: props.userSurname, date: selectedDate.toLocaleDateString(), time: selectedTime, email: props.email } });
             } catch (error) {

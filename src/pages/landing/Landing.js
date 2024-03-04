@@ -8,7 +8,7 @@ import fb from '../../img/icons8-facebook.svg';
 import twitter from '../../img/icons8-twitter.svg';
 import React, { useState, useEffect } from 'react';
 import SideBar from '../../components/sidebar/Sidebar';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 function Landing() {
@@ -36,10 +36,25 @@ function Landing() {
         };
     }, []);
 
-    const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const location = useLocation();
+
+    useEffect(() => {
+        // Perform scroll if scrollTo state is available
+        if (location.state?.scrollTo) {
+            const sectionId = location.state.scrollTo;
+            const sectionElement = document.getElementById(sectionId);
+            if (sectionElement) {
+                sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }, [location.state]);
+
 
     const toggleSidebar = () => {
         navigate('/bronn')
+    }
+    const handleAbout = () => {
+        navigate('/about')
     }
 
     const scrollToGallery = () =>{
@@ -176,11 +191,11 @@ function Landing() {
                         <div className="navbarItem" onClick={toggleSidebar}>
                             Broneeri aega
                         </div>
-                        <div className="navbarItem" onClick={scrollToContact}>
+                        <div className="navbarItem" onClick={handleAbout}>
                             Kontakt
                         </div>
                     </div>
-                    <div className="bookNow">
+                    <div className="bookNow" onClick={toggleSidebar}>
                         <div className="bookText">
                             Broneeri <br></br>
                             Aega

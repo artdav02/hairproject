@@ -115,12 +115,24 @@
     transition: background-color 0.3s;
     border-radius: 10px;
 }
+.categoryNameMaster {
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    border: 2px solid white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin: 5px 20px;
+    padding: 10px;
+    border-radius: 20px;
+    gap: 10px;
+}
+.categoryNameMaster:hover{
+    border: 2px solid #ccc;
+    transition: 0.3s;
+}
 
 .categoryName:hover {
     background-color: #f0f0f0;
-}
-.ulCategory{
-
 }
 .liName{
     list-style: none;
@@ -145,6 +157,7 @@
     font-weight: bold;
 }
 .categoryName,
+.categoryNameMaster,
 .categoryItems li {
     /* Initial state of the animation */
     opacity: 0;
@@ -243,6 +256,10 @@
     padding: 10px;
     border-radius: 10px;
     border: 2px solid #ccc;
+    resize: none;
+}
+.area{
+    height: 100px;
 }
 
 .userDetailsSection input:focus {
@@ -277,21 +294,7 @@
     flex-direction: column;
     padding-bottom: 20px;
 }
-.masterItem{
-    border: 2px solid white;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin: 5px 20px;
-    padding: 10px;
-    border-radius: 20px;
-    display: flex;
-    gap: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.masterItem:hover{
-    border: 2px solid #ccc;
-    transition: 0.3s;
-}
+
 .masterImage{
     width: 40px;
     height: 40px;
